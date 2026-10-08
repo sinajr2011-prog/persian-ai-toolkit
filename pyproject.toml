@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "persian-ai-toolkit"
-version = "1.0.0"
+version = "1.1.0"
 description = "Open-source AI tools specially designed for the Persian (Farsi) language"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -12,7 +12,7 @@ license = {text = "MIT"}
 authors = [
     {name = "Sina Jafari", email = "sinajr2011@gmail.com"}
 ]
-keywords = ["persian", "farsi", "nlp", "ai", "sentiment", "summarization", "fastapi"]
+keywords = ["persian", "farsi", "nlp", "ai", "sentiment", "summarization", "fastapi", "speech-to-text", "whisper"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
@@ -30,12 +30,14 @@ dependencies = [
     "pydantic>=2.9.0",
     "python-multipart>=0.0.12",
     "numpy>=1.26.0",
+    "gradio>=4.44.0",
 ]
 
 [project.optional-dependencies]
 ml = [
     "transformers>=4.46.0",
     "torch>=2.4.0",
+    "openai-whisper>=20231117",
 ]
 dev = [
     "pytest>=8.0",
