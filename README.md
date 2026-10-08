@@ -1,26 +1,26 @@
 # Persian AI Toolkit 🇮🇷
 
-**ابزارهای هوش مصنوعی مخصوص زبان فارسی**
+**Open-source AI tools specially designed for the Persian (Farsi) language**
 
-پروژه اوپن‌سورس کامل برای پردازش زبان طبیعی فارسی: تشخیص احساس، خلاصه‌سازی، تولید کپشن، استخراج کلمات کلیدی و API آماده.
-
----
-
-## ✨ قابلیت‌های فعلی (نسخه ۰.۳)
-
-| قابلیت | وضعیت | توضیح |
-|--------|--------|------|
-| تشخیص احساس | ✅ | Rule-based قوی + پشتیبانی اختیاری از مدل HuggingFace |
-| خلاصه‌سازی متن | ✅ | استخراجی سبک و سریع |
-| تولید کپشن + هشتگ | ✅ | مناسب اینستاگرام |
-| استخراج کلمات کلیدی | ✅ | آماده |
-| پاکسازی متن فارسی | ✅ | نرمال‌سازی عربی به فارسی |
-| **FastAPI کامل** | ✅ | همه قابلیت‌ها به صورت API |
-| Speech-to-Text | ⏳ | در نقشه راه |
+A complete toolkit for Persian Natural Language Processing: sentiment analysis, text summarization, Instagram caption & hashtag generation, keyword extraction, text cleaning, and a ready-to-use FastAPI.
 
 ---
 
-## 🚀 نصب و اجرا
+## ✨ Features (v0.3)
+
+| Feature | Status | Description |
+|---------|--------|-------------|
+| Sentiment Analysis | ✅ | Strong rule-based + optional HuggingFace model |
+| Text Summarization | ✅ | Lightweight extractive summarizer |
+| Caption & Hashtag Generator | ✅ | Perfect for Instagram |
+| Keyword Extraction | ✅ | Ready to use |
+| Persian Text Cleaning | ✅ | Arabic-to-Persian normalization |
+| **Full FastAPI** | ✅ | All features available as API endpoints |
+| Speech-to-Text | ⏳ | On the roadmap |
+
+---
+
+## 🚀 Installation
 
 ```bash
 git clone https://github.com/sinajr2011-prog/persian-ai-toolkit.git
@@ -33,30 +33,30 @@ source venv/bin/activate          # Linux / Mac
 pip install -r requirements.txt
 ```
 
-### اجرای مثال
+### Run the example
 ```bash
 python examples/basic_usage.py
 ```
 
-### اجرای API
+### Run the API
 ```bash
 cd app
 uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-بعد برو به: [http://localhost:8000/docs](http://localhost:8000/docs)
+Then open: [http://localhost:8000/docs](http://localhost:8000/docs)
 
 ---
 
-## 📡 اندپوینت‌های API
+## 📡 API Endpoints
 
-- `POST /sentiment` → تشخیص احساس
-- `POST /summarize` → خلاصه‌سازی
-- `POST /caption` → کپشن و هشتگ
-- `POST /keywords` → کلمات کلیدی
-- `POST /clean` → پاکسازی متن
+- `POST /sentiment` → Sentiment analysis
+- `POST /summarize` → Text summarization
+- `POST /caption` → Caption & hashtags
+- `POST /keywords` → Keyword extraction
+- `POST /clean` → Text cleaning
 
-مثال درخواست:
+Example request:
 ```bash
 curl -X POST "http://localhost:8000/sentiment" \
   -H "Content-Type: application/json" \
@@ -65,7 +65,7 @@ curl -X POST "http://localhost:8000/sentiment" \
 
 ---
 
-## 📦 استفاده در کد پایتون
+## 📦 Usage in Python
 
 ```python
 from persian_ai import analyze_sentiment, summarize, generate_caption, extract_keywords
@@ -76,14 +76,14 @@ print(generate_caption("غروب شمال"))
 print(extract_keywords(text))
 ```
 
-برای مدل واقعی (دقیق‌تر ولی نیاز به دانلود مدل):
+For higher accuracy using a real model (requires model download):
 ```python
-analyze_sentiment("متن شما", use_model=True)
+analyze_sentiment("your text", use_model=True)
 ```
 
 ---
 
-## 📁 ساختار پروژه
+## 📁 Project Structure
 
 ```
 persian-ai-toolkit/
@@ -91,7 +91,7 @@ persian-ai-toolkit/
 │   └── main.py              # FastAPI application
 ├── src/persian_ai/
 │   ├── __init__.py
-│   ├── sentiment.py         # تشخیص احساس (rule + HF)
+│   ├── sentiment.py         # Sentiment (rule-based + HF)
 │   ├── summarizer.py
 │   ├── caption.py
 │   └── utils.py
@@ -103,13 +103,13 @@ persian-ai-toolkit/
 
 ---
 
-## 🗺️ نقشه راه بعدی
+## 🗺️ Roadmap
 
-- [ ] اتصال کامل به مدل‌های بهتر فارسی
-- [ ] Speech-to-Text با پشتیبانی لهجه
-- [ ] نسخه Docker
-- [ ] داشبورد ساده وب
+- [ ] Better Persian transformer models
+- [ ] Speech-to-Text with Iranian accent support
+- [ ] Docker support
+- [ ] Simple web dashboard
 
 ---
 
-ساخته شده با ❤️ توسط [SinaJr](https://github.com/sinajr2011-prog)
+Made with ❤️ by [SinaJr](https://github.com/sinajr2011-prog)
