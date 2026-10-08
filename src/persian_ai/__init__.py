@@ -1,9 +1,9 @@
 """
 Persian AI Toolkit
-ابزارهای هوش مصنوعی مخصوص زبان فارسی
+Open-source AI tools specially designed for the Persian (Farsi) language
 """
 
-__version__ = "0.3.0"
+__version__ = "1.0.0"
 
 from .sentiment import analyze_sentiment
 from .summarizer import summarize
