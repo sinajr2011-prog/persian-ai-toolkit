@@ -2,33 +2,66 @@
 
 **ابزارهای هوش مصنوعی مخصوص زبان فارسی**
 
-یک پروژه اوپن‌سورس جدی برای پردازش زبان طبیعی فارسی، تشخیص احساس، خلاصه‌سازی متن، تولید محتوا و ابزارهای کاربردی AI برای فارسی‌زبانان.
+یک پروژه اوپن‌سورس جدی برای پردازش زبان طبیعی فارسی، تشخیص احساس، خلاصه‌سازی متن، تولید کپشن و ابزارهای کاربردی AI برای فارسی‌زبانان.
 
 ---
 
-## ✨ قابلیت‌های فعلی و برنامه‌ریزی‌شده
+## ✨ قابلیت‌های فعلی (نسخه ۰.۲)
 
-- [x] ساختار پایه پروژه
-- [ ] تشخیص احساس (Sentiment Analysis) روی متن فارسی
-- [ ] خلاصه‌سازی هوشمند متن و اخبار
-- [ ] تولید کپشن و هشتگ اینستاگرام
-- [ ] تبدیل گفتار به متن با پشتیبانی از لهجه‌های ایرانی
-- [ ] API ساده با FastAPI
-- [ ] مدل‌های سبک برای اجرا روی CPU
+- [x] **تشخیص احساس (Sentiment Analysis)** — با لغات کلیدی غنی فارسی
+- [x] **خلاصه‌سازی متن** — استخراجی سبک و سریع
+- [x] **تولید کپشن و هشتگ اینستاگرام**
+- [x] **استخراج کلمات کلیدی**
+- [x] **پاکسازی و نرمال‌سازی متن فارسی**
+- [ ] تبدیل گفتار به متن (Speech-to-Text)
+- [ ] API با FastAPI
+- [ ] مدل‌های واقعی HuggingFace (ParsBERT و ...)
 
 ---
 
 ## 🚀 شروع سریع
 
 ```bash
-git clone https://github.com/sinajr2011-prog/khafen-esolang-party.git
-cd khafen-esolang-party
+git clone https://github.com/sinajr2011-prog/persian-ai-toolkit.git
+cd persian-ai-toolkit
 
 python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# یا venv\Scripts\activate در ویندوز
+source venv/bin/activate          # Linux / Mac
+# venv\Scripts\activate         # Windows
 
 pip install -r requirements.txt
+
+# اجرای مثال
+python examples/basic_usage.py
+```
+
+---
+
+## 📦 استفاده در کد
+
+```python
+from persian_ai import (
+    analyze_sentiment,
+    summarize,
+    generate_caption,
+    extract_keywords,
+    clean_persian_text,
+)
+
+# تشخیص احساس
+result = analyze_sentiment("این محصول عالیه و محشره!")
+print(result["label"], result["score"])
+
+# خلاصه‌سازی
+summary = summarize(long_text, max_sentences=2)
+print(summary["summary"])
+
+# کپشن اینستاگرام
+caption = generate_caption("غروب شمال")
+print(caption["full_post"])
+
+# کلمات کلیدی
+keywords = extract_keywords(text)
 ```
 
 ---
@@ -44,8 +77,10 @@ persian-ai-toolkit/
 ├── src/
 │   └── persian_ai/
 │       ├── __init__.py
-│       ├── sentiment.py
-│       └── utils.py
+│       ├── sentiment.py      # تشخیص احساس
+│       ├── summarizer.py     # خلاصه‌سازی
+│       ├── caption.py        # کپشن و هشتگ
+│       └── utils.py          # ابزارهای کمکی
 ├── examples/
 │   └── basic_usage.py
 └── tests/
@@ -56,16 +91,24 @@ persian-ai-toolkit/
 ## 🛠️ تکنولوژی‌ها
 
 - Python 3.10+
-- FastAPI (برای API)
-- Hugging Face Transformers
-- مدل‌های متن‌باز فارسی (مثل parsbert, roberta-fa و ...)
+- آماده برای FastAPI + Hugging Face Transformers
+- فعلاً کاملاً سبک و بدون نیاز به GPU (rule-based + extractive)
+
+---
+
+## 🗺️ نقشه راه
+
+1. اضافه کردن مدل واقعی Sentiment با ParsBERT
+2. API کامل با FastAPI
+3. پشتیبانی از Speech-to-Text
+4. نسخه سبک‌تر برای موبایل و CPU ضعیف
 
 ---
 
 ## 🤝 مشارکت
 
-ایده‌ات رو بگو، Issue باز کن یا مستقیم Pull Request بفرست.  
-هدف اینه که بهترین ابزار اوپن‌سورس AI برای فارسی ساخته بشه.
+هر ایده‌ای داری Issue باز کن یا مستقیم PR بفرست.  
+هدف ساخت بهترین ابزار اوپن‌سورس AI برای زبان فارسیه.
 
 ---
 
