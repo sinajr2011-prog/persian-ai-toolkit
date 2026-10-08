@@ -1,55 +1,72 @@
-# 🔥 Khafen Esolang Party 🔥
+# Persian AI Toolkit 🇮🇷
 
-**یه ریپوی کاملاً دیوونه و خفن برای زبان‌های برنامه‌نویسی عجیب و غریب!**  
-اینجا خبری از پایتون و جاوااسکریپت معمولی نیست. ما رفتیم سراغ زبان‌هایی که مغزت رو منفجر می‌کنن، خنده‌دارن و کاملاً متفاوت!
+**ابزارهای هوش مصنوعی مخصوص زبان فارسی**
 
-> "An esoteric programming language is designed to experiment with weird ideas, to be hard to program in, or as a joke."
-
----
-
-## 🚀 چی داریم اینجا؟
-
-| زبان | توضیح خفن | فایل نمونه |
-|------|-----------|-------------|
-| **ArnoldC** | کد بر اساس دیالوگ‌های آرنولد شوارتزنگر! IT'S SHOWTIME 💪 | [hello.arnoldc](examples/hello.arnoldc) |
-| **LOLCODE** | زبان میم‌های لولکت. `HAI 1.2` و `KTHXBYE` | [hello.lol](examples/hello.lol) |
-| **Shakespeare** | کد مثل نمایشنامه شکسپیر! Characters و Acts | [hello.spl](examples/hello.spl) |
-| **Chef** | برنامه‌هایی که شبیه دستور پخت غذا هستن 🍰 | [hello.chef](examples/hello.chef) |
-| **Emojicode** | زبان کامل با ایموجی! 😀📦 | [hello.emojic](examples/hello.emojic) |
+یک پروژه اوپن‌سورس جدی برای پردازش زبان طبیعی فارسی، تشخیص احساس، خلاصه‌سازی متن، تولید محتوا و ابزارهای کاربردی AI برای فارسی‌زبانان.
 
 ---
 
-## 🎮 چطور امتحان کنی؟
+## ✨ قابلیت‌های فعلی و برنامه‌ریزی‌شده
 
-اکثر این زبان‌ها رو می‌تونی آنلاین ران کنی:
-- [Try It Online (TIO)](https://tio.run) → خیلی از esolangها رو داره
-- [ArnoldC Online](https://arnoldc.herokuapp.com/) یا جستجو کن
-- [LOLCODE](https://www.tutorialspoint.com/execute_lolcode_online.php)
+- [x] ساختار پایه پروژه
+- [ ] تشخیص احساس (Sentiment Analysis) روی متن فارسی
+- [ ] خلاصه‌سازی هوشمند متن و اخبار
+- [ ] تولید کپشن و هشتگ اینستاگرام
+- [ ] تبدیل گفتار به متن با پشتیبانی از لهجه‌های ایرانی
+- [ ] API ساده با FastAPI
+- [ ] مدل‌های سبک برای اجرا روی CPU
 
 ---
 
-## 🛠️ ساختار ریپو
+## 🚀 شروع سریع
+
+```bash
+git clone https://github.com/sinajr2011-prog/khafen-esolang-party.git
+cd khafen-esolang-party
+
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+# یا venv\Scripts\activate در ویندوز
+
+pip install -r requirements.txt
+```
+
+---
+
+## 📁 ساختار پروژه
 
 ```
-khafen-esolang-party/
+persian-ai-toolkit/
 ├── README.md
+├── requirements.txt
+├── .gitignore
+├── LICENSE
+├── src/
+│   └── persian_ai/
+│       ├── __init__.py
+│       ├── sentiment.py
+│       └── utils.py
 ├── examples/
-│   ├── hello.arnoldc
-│   ├── hello.lol
-│   ├── hello.spl
-│   ├── hello.chef
-│   └── hello.emojic
-└── CONTRIBUTING.md
+│   └── basic_usage.py
+└── tests/
 ```
 
 ---
 
-## 💡 ایده برای مشارکت
+## 🛠️ تکنولوژی‌ها
 
-اگه زبان عجیب‌تری بلدی (مثل Malbolge یا Piet یا Brainfuck پیشرفته) PR بزن!  
-یا یه برنامه خفن بنویس (مثلاً ماشین حساب با آرنولد یا داستان کوتاه با شکسپیر).
+- Python 3.10+
+- FastAPI (برای API)
+- Hugging Face Transformers
+- مدل‌های متن‌باز فارسی (مثل parsbert, roberta-fa و ...)
 
 ---
 
-ساخته شده با ❤️ و مقدار زیادی دیوانگی توسط [SinaJr](https://github.com/sinajr2011-prog)  
-بیا با هم مرزهای برنامه‌نویسی رو جابجا کنیم! 🚀👾
+## 🤝 مشارکت
+
+ایده‌ات رو بگو، Issue باز کن یا مستقیم Pull Request بفرست.  
+هدف اینه که بهترین ابزار اوپن‌سورس AI برای فارسی ساخته بشه.
+
+---
+
+ساخته شده با ❤️ توسط [SinaJr](https://github.com/sinajr2011-prog)
