@@ -2,24 +2,25 @@
 
 **ابزارهای هوش مصنوعی مخصوص زبان فارسی**
 
-یک پروژه اوپن‌سورس جدی برای پردازش زبان طبیعی فارسی، تشخیص احساس، خلاصه‌سازی متن، تولید کپشن و ابزارهای کاربردی AI برای فارسی‌زبانان.
+پروژه اوپن‌سورس کامل برای پردازش زبان طبیعی فارسی: تشخیص احساس، خلاصه‌سازی، تولید کپشن، استخراج کلمات کلیدی و API آماده.
 
 ---
 
-## ✨ قابلیت‌های فعلی (نسخه ۰.۲)
+## ✨ قابلیت‌های فعلی (نسخه ۰.۳)
 
-- [x] **تشخیص احساس (Sentiment Analysis)** — با لغات کلیدی غنی فارسی
-- [x] **خلاصه‌سازی متن** — استخراجی سبک و سریع
-- [x] **تولید کپشن و هشتگ اینستاگرام**
-- [x] **استخراج کلمات کلیدی**
-- [x] **پاکسازی و نرمال‌سازی متن فارسی**
-- [ ] تبدیل گفتار به متن (Speech-to-Text)
-- [ ] API با FastAPI
-- [ ] مدل‌های واقعی HuggingFace (ParsBERT و ...)
+| قابلیت | وضعیت | توضیح |
+|--------|--------|------|
+| تشخیص احساس | ✅ | Rule-based قوی + پشتیبانی اختیاری از مدل HuggingFace |
+| خلاصه‌سازی متن | ✅ | استخراجی سبک و سریع |
+| تولید کپشن + هشتگ | ✅ | مناسب اینستاگرام |
+| استخراج کلمات کلیدی | ✅ | آماده |
+| پاکسازی متن فارسی | ✅ | نرمال‌سازی عربی به فارسی |
+| **FastAPI کامل** | ✅ | همه قابلیت‌ها به صورت API |
+| Speech-to-Text | ⏳ | در نقشه راه |
 
 ---
 
-## 🚀 شروع سریع
+## 🚀 نصب و اجرا
 
 ```bash
 git clone https://github.com/sinajr2011-prog/persian-ai-toolkit.git
@@ -30,38 +31,54 @@ source venv/bin/activate          # Linux / Mac
 # venv\Scripts\activate         # Windows
 
 pip install -r requirements.txt
+```
 
-# اجرای مثال
+### اجرای مثال
+```bash
 python examples/basic_usage.py
+```
+
+### اجرای API
+```bash
+cd app
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
+
+بعد برو به: [http://localhost:8000/docs](http://localhost:8000/docs)
+
+---
+
+## 📡 اندپوینت‌های API
+
+- `POST /sentiment` → تشخیص احساس
+- `POST /summarize` → خلاصه‌سازی
+- `POST /caption` → کپشن و هشتگ
+- `POST /keywords` → کلمات کلیدی
+- `POST /clean` → پاکسازی متن
+
+مثال درخواست:
+```bash
+curl -X POST "http://localhost:8000/sentiment" \
+  -H "Content-Type: application/json" \
+  -d '{"text": "این محصول عالیه و محشره!", "use_model": false}'
 ```
 
 ---
 
-## 📦 استفاده در کد
+## 📦 استفاده در کد پایتون
 
 ```python
-from persian_ai import (
-    analyze_sentiment,
-    summarize,
-    generate_caption,
-    extract_keywords,
-    clean_persian_text,
-)
+from persian_ai import analyze_sentiment, summarize, generate_caption, extract_keywords
 
-# تشخیص احساس
-result = analyze_sentiment("این محصول عالیه و محشره!")
-print(result["label"], result["score"])
+print(analyze_sentiment("عاشق این اپ شدم!"))
+print(summarize(long_text, max_sentences=2))
+print(generate_caption("غروب شمال"))
+print(extract_keywords(text))
+```
 
-# خلاصه‌سازی
-summary = summarize(long_text, max_sentences=2)
-print(summary["summary"])
-
-# کپشن اینستاگرام
-caption = generate_caption("غروب شمال")
-print(caption["full_post"])
-
-# کلمات کلیدی
-keywords = extract_keywords(text)
+برای مدل واقعی (دقیق‌تر ولی نیاز به دانلود مدل):
+```python
+analyze_sentiment("متن شما", use_model=True)
 ```
 
 ---
@@ -70,45 +87,28 @@ keywords = extract_keywords(text)
 
 ```
 persian-ai-toolkit/
-├── README.md
-├── requirements.txt
-├── .gitignore
-├── LICENSE
-├── src/
-│   └── persian_ai/
-│       ├── __init__.py
-│       ├── sentiment.py      # تشخیص احساس
-│       ├── summarizer.py     # خلاصه‌سازی
-│       ├── caption.py        # کپشن و هشتگ
-│       └── utils.py          # ابزارهای کمکی
+├── app/
+│   └── main.py              # FastAPI application
+├── src/persian_ai/
+│   ├── __init__.py
+│   ├── sentiment.py         # تشخیص احساس (rule + HF)
+│   ├── summarizer.py
+│   ├── caption.py
+│   └── utils.py
 ├── examples/
 │   └── basic_usage.py
-└── tests/
+├── requirements.txt
+└── README.md
 ```
 
 ---
 
-## 🛠️ تکنولوژی‌ها
+## 🗺️ نقشه راه بعدی
 
-- Python 3.10+
-- آماده برای FastAPI + Hugging Face Transformers
-- فعلاً کاملاً سبک و بدون نیاز به GPU (rule-based + extractive)
-
----
-
-## 🗺️ نقشه راه
-
-1. اضافه کردن مدل واقعی Sentiment با ParsBERT
-2. API کامل با FastAPI
-3. پشتیبانی از Speech-to-Text
-4. نسخه سبک‌تر برای موبایل و CPU ضعیف
-
----
-
-## 🤝 مشارکت
-
-هر ایده‌ای داری Issue باز کن یا مستقیم PR بفرست.  
-هدف ساخت بهترین ابزار اوپن‌سورس AI برای زبان فارسیه.
+- [ ] اتصال کامل به مدل‌های بهتر فارسی
+- [ ] Speech-to-Text با پشتیبانی لهجه
+- [ ] نسخه Docker
+- [ ] داشبورد ساده وب
 
 ---
 
