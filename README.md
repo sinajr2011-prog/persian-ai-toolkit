@@ -2,25 +2,33 @@
 
 **Open-source AI tools specially designed for the Persian (Farsi) language**
 
-A complete toolkit for Persian Natural Language Processing: sentiment analysis, text summarization, Instagram caption & hashtag generation, keyword extraction, text cleaning, and a ready-to-use FastAPI.
+A production-ready toolkit for Persian NLP: sentiment analysis, text summarization, Instagram caption & hashtag generation, keyword extraction, text cleaning, and a full FastAPI service.
+
+![Python](https://img.shields.io/badge/Python-3.10+-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-ready-green)
+![License](https://img.shields.io/badge/License-MIT-yellow)
+![Version](https://img.shields.io/badge/Version-1.0.0-orange)
 
 ---
 
-## ✨ Features (v0.3)
+## ✨ Features (v1.0.0)
 
-| Feature | Status | Description |
-|---------|--------|-------------|
-| Sentiment Analysis | ✅ | Strong rule-based + optional HuggingFace model |
-| Text Summarization | ✅ | Lightweight extractive summarizer |
-| Caption & Hashtag Generator | ✅ | Perfect for Instagram |
-| Keyword Extraction | ✅ | Ready to use |
-| Persian Text Cleaning | ✅ | Arabic-to-Persian normalization |
-| **Full FastAPI** | ✅ | All features available as API endpoints |
-| Speech-to-Text | ⏳ | On the roadmap |
+| Feature                      | Status | Description                                      |
+|-----------------------------|--------|--------------------------------------------------|
+| Sentiment Analysis          | ✅     | Strong rule-based + optional HuggingFace model   |
+| Text Summarization          | ✅     | Lightweight extractive summarizer                |
+| Caption & Hashtag Generator | ✅     | Perfect for Instagram                            |
+| Keyword Extraction          | ✅     | Ready to use                                     |
+| Persian Text Cleaning       | ✅     | Arabic-to-Persian normalization                  |
+| Full FastAPI                | ✅     | Production-ready API with CORS & health check    |
+| Docker Support              | ✅     | Dockerfile + docker-compose included             |
+| Installable Package         | ✅     | `pip install -e .` ready                         |
 
 ---
 
-## 🚀 Installation
+## 🚀 Quick Start
+
+### 1. Clone & Install
 
 ```bash
 git clone https://github.com/sinajr2011-prog/persian-ai-toolkit.git
@@ -30,33 +38,46 @@ python -m venv venv
 source venv/bin/activate          # Linux / Mac
 # venv\Scripts\activate         # Windows
 
-pip install -r requirements.txt
+pip install -e .
+# Optional: for real ML models
+pip install -e ".[ml]"
 ```
 
-### Run the example
+### 2. Run the example
+
 ```bash
 python examples/basic_usage.py
 ```
 
-### Run the API
+### 3. Run the API
+
 ```bash
-cd app
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-Then open: [http://localhost:8000/docs](http://localhost:8000/docs)
+Open Swagger UI → [http://localhost:8000/docs](http://localhost:8000/docs)
+
+### 4. Run with Docker
+
+```bash
+docker compose up --build
+```
 
 ---
 
 ## 📡 API Endpoints
 
-- `POST /sentiment` → Sentiment analysis
-- `POST /summarize` → Text summarization
-- `POST /caption` → Caption & hashtags
-- `POST /keywords` → Keyword extraction
-- `POST /clean` → Text cleaning
+| Method | Endpoint       | Description                    |
+|--------|----------------|--------------------------------|
+| GET    | `/`            | Service info                   |
+| GET    | `/health`      | Health check                   |
+| POST   | `/sentiment`   | Sentiment analysis             |
+| POST   | `/summarize`   | Text summarization             |
+| POST   | `/caption`     | Caption & hashtags             |
+| POST   | `/keywords`    | Keyword extraction             |
+| POST   | `/clean`       | Text cleaning                  |
 
-Example request:
+Example:
 ```bash
 curl -X POST "http://localhost:8000/sentiment" \
   -H "Content-Type: application/json" \
@@ -65,18 +86,34 @@ curl -X POST "http://localhost:8000/sentiment" \
 
 ---
 
-## 📦 Usage in Python
+## 📦 Python Usage
 
 ```python
-from persian_ai import analyze_sentiment, summarize, generate_caption, extract_keywords
+from persian_ai import (
+    analyze_sentiment,
+    summarize,
+    generate_caption,
+    extract_keywords,
+    clean_persian_text,
+)
 
+# Sentiment
 print(analyze_sentiment("عاشق این اپ شدم!"))
+
+# Summarize
 print(summarize(long_text, max_sentences=2))
+
+# Instagram caption
 print(generate_caption("غروب شمال"))
+
+# Keywords
 print(extract_keywords(text))
+
+# Clean text
+print(clean_persian_text(messy_text))
 ```
 
-For higher accuracy using a real model (requires model download):
+For higher accuracy (downloads model on first use):
 ```python
 analyze_sentiment("your text", use_model=True)
 ```
@@ -88,15 +125,18 @@ analyze_sentiment("your text", use_model=True)
 ```
 persian-ai-toolkit/
 ├── app/
-│   └── main.py              # FastAPI application
+│   └── main.py                 # FastAPI application
 ├── src/persian_ai/
 │   ├── __init__.py
-│   ├── sentiment.py         # Sentiment (rule-based + HF)
+│   ├── sentiment.py            # Sentiment (rule-based + HF)
 │   ├── summarizer.py
 │   ├── caption.py
 │   └── utils.py
 ├── examples/
 │   └── basic_usage.py
+├── Dockerfile
+├── docker-compose.yml
+├── pyproject.toml
 ├── requirements.txt
 └── README.md
 ```
@@ -105,11 +145,17 @@ persian-ai-toolkit/
 
 ## 🗺️ Roadmap
 
-- [ ] Better Persian transformer models
+- [ ] Better Persian transformer models out of the box
 - [ ] Speech-to-Text with Iranian accent support
-- [ ] Docker support
 - [ ] Simple web dashboard
+- [ ] More evaluation benchmarks
 
 ---
 
-Made with ❤️ by [SinaJr](https://github.com/sinajr2011-prog)
+## 📄 License
+
+MIT License © 2026 [SinaJr](https://github.com/sinajr2011-prog)
+
+---
+
+Made with ❤️ for the Persian-speaking developer community
