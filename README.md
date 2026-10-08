@@ -2,7 +2,7 @@
 
 **Open-source AI tools specially designed for the Persian (Farsi) language**
 
-A production-ready toolkit for Persian NLP: sentiment analysis, text summarization, Instagram caption & hashtag generation, keyword extraction, text cleaning, Speech-to-Text, and a beautiful web dashboard.
+A production-ready toolkit for Persian NLP: sentiment analysis, text summarization, Instagram caption & hashtag generation, keyword extraction, text cleaning, Speech-to-Text, and a beautiful web dashboard. Other things will be added soon... 😁
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-ready-green)
