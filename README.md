@@ -2,63 +2,65 @@
 
 **Open-source AI tools specially designed for the Persian (Farsi) language**
 
-A production-ready toolkit for Persian NLP: sentiment analysis, text summarization, Instagram caption & hashtag generation, keyword extraction, text cleaning, and a full FastAPI service.
+A production-ready toolkit for Persian NLP: sentiment analysis, text summarization, Instagram caption & hashtag generation, keyword extraction, text cleaning, Speech-to-Text, and a beautiful web dashboard.
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-ready-green)
+![Gradio](https://img.shields.io/badge/Gradio-Dashboard-orange)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
-![Version](https://img.shields.io/badge/Version-1.0.0-orange)
+![Version](https://img.shields.io/badge/Version-1.1.0-brightgreen)
 
 ---
 
-## ✨ Features (v1.0.0)
+## ✨ Features (v1.1.0)
 
 | Feature                      | Status | Description                                      |
 |-----------------------------|--------|--------------------------------------------------|
-| Sentiment Analysis          | ✅     | Strong rule-based + optional HuggingFace model   |
+| Sentiment Analysis          | ✅     | Rule-based + multiple Persian HF models          |
 | Text Summarization          | ✅     | Lightweight extractive summarizer                |
 | Caption & Hashtag Generator | ✅     | Perfect for Instagram                            |
 | Keyword Extraction          | ✅     | Ready to use                                     |
 | Persian Text Cleaning       | ✅     | Arabic-to-Persian normalization                  |
+| **Speech-to-Text**          | ✅     | Whisper with Persian / Iranian accent support    |
+| **Web Dashboard**           | ✅     | Beautiful Gradio UI                              |
 | Full FastAPI                | ✅     | Production-ready API with CORS & health check    |
-| Docker Support              | ✅     | Dockerfile + docker-compose included             |
-| Installable Package         | ✅     | `pip install -e .` ready                         |
+| Docker Support              | ✅     | Dockerfile + docker-compose                      |
+| Benchmarks                  | ✅     | Sentiment evaluation suite                       |
 
 ---
 
 ## 🚀 Quick Start
-
-### 1. Clone & Install
 
 ```bash
 git clone https://github.com/sinajr2011-prog/persian-ai-toolkit.git
 cd persian-ai-toolkit
 
 python -m venv venv
-source venv/bin/activate          # Linux / Mac
-# venv\Scripts\activate         # Windows
+source venv/bin/activate
 
 pip install -e .
-# Optional: for real ML models
+# For ML models + Whisper:
 pip install -e ".[ml]"
 ```
 
-### 2. Run the example
-
+### Run the Web Dashboard (recommended)
 ```bash
-python examples/basic_usage.py
+python app/dashboard.py
+```
+Open → http://localhost:7860
+
+### Run the API
+```bash
+uvicorn app.main:app --reload --port 8000
+```
+Swagger → http://localhost:8000/docs
+
+### Run Benchmark
+```bash
+python benchmarks/sentiment_benchmark.py
 ```
 
-### 3. Run the API
-
-```bash
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-```
-
-Open Swagger UI → [http://localhost:8000/docs](http://localhost:8000/docs)
-
-### 4. Run with Docker
-
+### Docker
 ```bash
 docker compose up --build
 ```
@@ -67,22 +69,15 @@ docker compose up --build
 
 ## 📡 API Endpoints
 
-| Method | Endpoint       | Description                    |
-|--------|----------------|--------------------------------|
-| GET    | `/`            | Service info                   |
-| GET    | `/health`      | Health check                   |
-| POST   | `/sentiment`   | Sentiment analysis             |
-| POST   | `/summarize`   | Text summarization             |
-| POST   | `/caption`     | Caption & hashtags             |
-| POST   | `/keywords`    | Keyword extraction             |
-| POST   | `/clean`       | Text cleaning                  |
-
-Example:
-```bash
-curl -X POST "http://localhost:8000/sentiment" \
-  -H "Content-Type: application/json" \
-  -d '{"text": "این محصول عالیه و محشره!", "use_model": false}'
-```
+| Method | Endpoint     | Description              |
+|--------|--------------|--------------------------|
+| GET    | `/`          | Service info             |
+| GET    | `/health`    | Health check             |
+| POST   | `/sentiment` | Sentiment analysis       |
+| POST   | `/summarize` | Text summarization       |
+| POST   | `/caption`   | Caption & hashtags       |
+| POST   | `/keywords`  | Keyword extraction       |
+| POST   | `/clean`     | Text cleaning            |
 
 ---
 
@@ -94,28 +89,19 @@ from persian_ai import (
     summarize,
     generate_caption,
     extract_keywords,
-    clean_persian_text,
+    speech_to_text,
+    list_available_models,
 )
 
-# Sentiment
-print(analyze_sentiment("عاشق این اپ شدم!"))
+# Sentiment (rule-based or real model)
+print(analyze_sentiment("عاشق این اپ شدم!", use_model=True))
 
-# Summarize
-print(summarize(long_text, max_sentences=2))
+# Speech-to-Text (requires openai-whisper)
+result = speech_to_text("audio.wav", model_size="base")
+print(result["text"])
 
-# Instagram caption
-print(generate_caption("غروب شمال"))
-
-# Keywords
-print(extract_keywords(text))
-
-# Clean text
-print(clean_persian_text(messy_text))
-```
-
-For higher accuracy (downloads model on first use):
-```python
-analyze_sentiment("your text", use_model=True)
+# Available models
+print(list_available_models())
 ```
 
 ---
@@ -125,30 +111,32 @@ analyze_sentiment("your text", use_model=True)
 ```
 persian-ai-toolkit/
 ├── app/
-│   └── main.py                 # FastAPI application
+│   ├── main.py                 # FastAPI
+│   └── dashboard.py            # Gradio Web UI
 ├── src/persian_ai/
-│   ├── __init__.py
-│   ├── sentiment.py            # Sentiment (rule-based + HF)
+│   ├── sentiment.py
 │   ├── summarizer.py
 │   ├── caption.py
+│   ├── speech.py               # Whisper STT
+│   ├── models.py               # Model registry
 │   └── utils.py
-├── examples/
-│   └── basic_usage.py
+├── benchmarks/
+│   └── sentiment_benchmark.py
 ├── Dockerfile
 ├── docker-compose.yml
-├── pyproject.toml
-├── requirements.txt
-└── README.md
+└── pyproject.toml
 ```
 
 ---
 
 ## 🗺️ Roadmap
 
-- [ ] Better Persian transformer models out of the box
-- [ ] Speech-to-Text with Iranian accent support
-- [ ] Simple web dashboard
-- [ ] More evaluation benchmarks
+- [x] Better Persian transformer models out of the box
+- [x] Speech-to-Text with Iranian accent support
+- [x] Simple web dashboard
+- [x] More evaluation benchmarks
+- [ ] Even better models & fine-tuning scripts
+- [ ] Full web dashboard with audio upload
 
 ---
 
