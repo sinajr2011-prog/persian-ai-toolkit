@@ -1,44 +1,68 @@
 """
 ماژول تشخیص احساس برای متن فارسی
+نسخه بهبودیافته مبتنی بر لغات کلیدی + آماده برای مدل‌های واقعی
 """
 
-from typing import Dict, Any
+from typing import Dict, Any, List
+import re
+
+
+# لغات مثبت و منفی گسترش‌یافته
+POSITIVE_WORDS: List[str] = [
+    "عالی", "عالیه", "عالی بود", "عالی هست", "محشر", "محشره", "فوق‌العاده", "فوق العاده",
+    "دوست داشتم", "دوست دارم", "عاشق", "عاشقشم", "عاشقتم", "خوشحال", "خوشحالم",
+    "ممنون", "مرسی", "دمت گرم", "عالی کار کردی", "حرف نداره", "بی‌نظیر", "بینظیر",
+    "خوب", "خوبه", "خوب بود", "عالیه واقعا", "پیشنهاد می‌کنم", "پیشنهاد میکنم",
+    "راضی", "راضی هستم", "عالیه دیگه", "بهترین", "بهترینه", "لذت بردم", "لذت‌بخش"
+]
+
+NEGATIVE_WORDS: List[str] = [
+    "بد", "بده", "بد بود", "افتضاح", "افتضاحه", "افتضاح بود", "مزخرف", "مزخرفه",
+    "ضعیف", "ضعیفه", "متنفرم", "متنفرم از", "ناراحت", "ناراحتم", "عصبانی", "عصبانی‌ام",
+    "پشیمون", "پشیمونم", "اصلا خوب نبود", "افتضاح مطلق", "خراب", "خرابه",
+    "نپسندیدم", "دوست نداشتم", "بدرد نخور", "بی‌ارزش", "افتضاح کار کرد", "ناامید"
+]
 
 
 def analyze_sentiment(text: str) -> Dict[str, Any]:
     """
-    تشخیص احساس متن فارسی (نسخه ساده و پایه).
-
-    در نسخه‌های بعدی با مدل‌های واقعی مثل ParsBERT جایگزین می‌شود.
+    تشخیص احساس متن فارسی.
 
     Args:
         text: متن فارسی ورودی
 
     Returns:
-        دیکشنری شامل احساس و امتیاز
+        دیکشنری شامل:
+        - label: positive / negative / neutral
+        - score: امتیاز اطمینان (۰ تا ۱)
+        - positive_hits / negative_hits
+        - matched words
+        - text_preview
     """
-    if not text or not text.strip():
+    if not text or not str(text).strip():
         return {
             "label": "neutral",
             "score": 0.0,
-            "message": "متن خالی است"
+            "positive_hits": 0,
+            "negative_hits": 0,
+            "message": "متن خالی است",
+            "text_preview": ""
         }
 
-    # نسخه ساده مبتنی بر کلمات کلیدی (موقت)
-    positive_words = ["عالی", "خوب", "دوست داشتم", "عالیه", "محشر", "عالی بود", "ممنون", "عالی هست", "خوشحال", "عاشق"]
-    negative_words = ["بد", "افتضاح", "متنفرم", "ضعیف", "مزخرف", "ناراحت", "عصبانی", "افتضاحه", "بد بود"]
+    cleaned = re.sub(r"\s+", " ", text.strip())
 
-    text_lower = text.lower()
+    pos_hits = [w for w in POSITIVE_WORDS if w in cleaned]
+    neg_hits = [w for w in NEGATIVE_WORDS if w in cleaned]
 
-    pos_count = sum(1 for word in positive_words if word in text_lower)
-    neg_count = sum(1 for word in negative_words if word in text_lower)
+    pos_count = len(pos_hits)
+    neg_count = len(neg_hits)
 
     if pos_count > neg_count:
         label = "positive"
-        score = min(0.6 + pos_count * 0.1, 0.95)
+        score = min(0.55 + pos_count * 0.12, 0.97)
     elif neg_count > pos_count:
         label = "negative"
-        score = min(0.6 + neg_count * 0.1, 0.95)
+        score = min(0.55 + neg_count * 0.12, 0.97)
     else:
         label = "neutral"
         score = 0.5
@@ -46,5 +70,9 @@ def analyze_sentiment(text: str) -> Dict[str, Any]:
     return {
         "label": label,
         "score": round(score, 3),
-        "text": text[:100] + ("..." if len(text) > 100 else "")
+        "positive_hits": pos_count,
+        "negative_hits": neg_count,
+        "matched_positive": pos_hits[:5],
+        "matched_negative": neg_hits[:5],
+        "text_preview": cleaned[:120] + ("..." if len(cleaned) > 120 else "")
     }
