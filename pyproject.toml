@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "persian-ai-toolkit"
+version = "1.0.0"
+description = "Open-source AI tools specially designed for the Persian (Farsi) language"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Sina Jafari", email = "sinajr2011@gmail.com"}
+]
+keywords = ["persian", "farsi", "nlp", "ai", "sentiment", "summarization", "fastapi"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Text Processing :: Linguistic",
+]
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "pydantic>=2.9.0",
+    "python-multipart>=0.0.12",
+    "numpy>=1.26.0",
+]
+
+[project.optional-dependencies]
+ml = [
+    "transformers>=4.46.0",
+    "torch>=2.4.0",
+]
+dev = [
+    "pytest>=8.0",
+    "httpx>=0.27",
+]
+
+[project.urls]
+Homepage = "https://github.com/sinajr2011-prog/persian-ai-toolkit"
+Repository = "https://github.com/sinajr2011-prog/persian-ai-toolkit"
+
+[tool.setuptools.packages.find]
+where = ["src"]
